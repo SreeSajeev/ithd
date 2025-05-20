@@ -23,11 +23,11 @@ const HelpDeskForm: React.FC = () => {
   };
 
   return (
-    <div className="form-container w-full max-w-4xl p-8">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+    <div className="form-container w-full max-w-[1366px] p-8 bg-white">
+      <div className="grid grid-cols-2 gap-x-8 gap-y-6">
         {/* Row 1 */}
         <div>
-          <label htmlFor="psNumber" className="form-label block mb-1">PS Number <span className="text-red-400">*</span></label>
+          <label htmlFor="psNumber" className="form-label block mb-2">PS Number <span className="text-red-500">*</span></label>
           <input 
             type="text" 
             id="psNumber" 
@@ -37,7 +37,7 @@ const HelpDeskForm: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="reportedBy" className="form-label block mb-1">Reported By</label>
+          <label htmlFor="reportedBy" className="form-label block mb-2">Reported By</label>
           <input 
             type="text" 
             id="reportedBy" 
@@ -49,21 +49,23 @@ const HelpDeskForm: React.FC = () => {
 
         {/* Row 2 */}
         <div>
-          <label htmlFor="function" className="form-label block mb-1">Function <span className="text-red-400">*</span></label>
+          <label htmlFor="function" className="form-label block mb-2">Function <span className="text-red-500">*</span></label>
           <div className="relative">
             <select 
               id="function" 
               className="form-input form-select" 
               defaultValue="dropdown"
             >
-              <option value="dropdown">Dropdown option</option>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
+              <option value="dropdown">Select Function</option>
+              <option value="option1">Finance</option>
+              <option value="option2">Human Resources</option>
+              <option value="option3">Engineering</option>
+              <option value="option4">Operations</option>
             </select>
           </div>
         </div>
         <div>
-          <label htmlFor="mobileNumber" className="form-label block mb-1">Mobile Number</label>
+          <label htmlFor="mobileNumber" className="form-label block mb-2">Mobile Number</label>
           <input 
             type="text" 
             id="mobileNumber" 
@@ -74,7 +76,7 @@ const HelpDeskForm: React.FC = () => {
 
         {/* Row 3 */}
         <div>
-          <label htmlFor="externalNumber" className="form-label block mb-1">External Number <span className="text-red-400">*</span></label>
+          <label htmlFor="externalNumber" className="form-label block mb-2">External Number <span className="text-red-500">*</span></label>
           <input 
             type="text" 
             id="externalNumber" 
@@ -83,14 +85,14 @@ const HelpDeskForm: React.FC = () => {
           />
         </div>
         <div>
-          <label htmlFor="plant" className="form-label block mb-1">Plant</label>
+          <label htmlFor="plant" className="form-label block mb-2">Plant</label>
           <div className="relative">
             <select 
               id="plant" 
               className="form-input form-select" 
               defaultValue="prefilled"
             >
-              <option value="prefilled">Prefilled</option>
+              <option value="prefilled">Prefilled Plant</option>
               <option value="plant1">Plant 1</option>
               <option value="plant2">Plant 2</option>
             </select>
@@ -99,7 +101,7 @@ const HelpDeskForm: React.FC = () => {
 
         {/* Row 4 - Full Width */}
         <div className="col-span-2">
-          <label htmlFor="product" className="form-label block mb-1">Product</label>
+          <label htmlFor="product" className="form-label block mb-2">Product</label>
           <input 
             type="text" 
             id="product" 
@@ -110,48 +112,44 @@ const HelpDeskForm: React.FC = () => {
       </div>
 
       {/* Action Buttons - First Row */}
-      <div className="grid grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-3 gap-6 mt-10">
         <button 
-          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto"
           onClick={handleReportProblem}
         >
           <AlertCircle className="w-5 h-5 mr-2" />
           Report A Problem
         </button>
         <button 
-          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto"
           onClick={handleSearchIssue}
         >
           <Search className="w-5 h-5 mr-2" />
           Search Issues
         </button>
-      </div>
-
-      {/* Action Buttons - Second Row */}
-      <div className="grid grid-cols-2 gap-6 mt-8">
         <button 
-          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto"
           onClick={handleChangeRequest}
         >
           <ArrowRightLeft className="w-5 h-5 mr-2" />
           Change Request
         </button>
+      </div>
+
+      {/* Action Buttons - Second Row */}
+      <div className="grid grid-cols-3 gap-6 mt-8 mb-4">
         <button 
-          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto"
           onClick={handleClarification}
         >
           <HelpCircle className="w-5 h-5 mr-2" />
           Ask for Clarification
         </button>
-      </div>
-
-      {/* Action Buttons - Third Row */}
-      <div className="grid grid-cols-2 gap-6 mt-8">
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
+        <button className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto">
           <FileText className="w-5 h-5 mr-2" />
-          Download UserID Request Form
+          Download UserID Form
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
+        <button className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto">
           <BarChart3 className="w-5 h-5 mr-2" />
           IT Escalation Matrix
         </button>

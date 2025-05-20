@@ -19,9 +19,8 @@ const Login: React.FC = () => {
       return;
     }
     
-    // Mock authentication - in a real app, this would be a proper API call
+    // Mock authentication
     if (email && password) {
-      // Navigate to the IT Helpdesk page
       navigate('/');
     } else {
       setError('Invalid credentials');
@@ -31,7 +30,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-container">
       <div className="login-left">
-        <div className="w-80 h-80 bg-gray-200 flex items-center justify-center">
+        <div className="w-80 h-80 bg-lt-lightGrey flex items-center justify-center">
           <Logo />
         </div>
       </div>
@@ -77,7 +76,7 @@ const Login: React.FC = () => {
                   onChange={() => setRememberMe(!rememberMe)}
                   className="mr-2"
                 />
-                <label htmlFor="rememberMe" className="text-sm text-white">Remember me</label>
+                <label htmlFor="rememberMe" className="text-sm text-lt-grey">Remember me</label>
               </div>
               <a href="#" className="forgot-password">Forgot Password?</a>
             </div>

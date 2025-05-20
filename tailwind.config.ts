@@ -53,12 +53,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				helpdesk: {
-					bg: '#10002b',
-					darkBlue: '#240046',
-					lightBlue: '#77D4FE',
-					formLabel: '#C3D9F0'
+				// L&T Valves UI color palette
+				lt: {
+					darkBlue: '#024d87',    // header background
+					brightBlue: '#0370c0',  // hover, icons
+					white: '#ffffff',       // text and input backgrounds
+					lightGrey: '#eeeeee',   // borders, section backgrounds
+					grey: '#666666',        // paragraph text
+					mutedGrey: '#999999',   // footer text
+					offWhite: '#f6f6f6',    // content background
+					primary: '#0077bd',     // primary button
+					secondary: '#003f72',   // secondary button
 				}
+			},
+			fontFamily: {
+				sans: ['Source Sans Pro', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

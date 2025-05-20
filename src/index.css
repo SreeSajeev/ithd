@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -43,55 +45,51 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: sans-serif;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
 /* Custom styles for the IT Helpdesk */
-.helpdesk-bg {
-  background: linear-gradient(to bottom, #10002b, #240046);
+.lt-bg {
+  background-color: #f6f6f6; /* Off-white background */
 }
 
-.text-glow {
-  color: white;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 
-               0 0 8px rgba(77, 213, 254, 0.2);
+.header-bg {
+  background-color: #024d87; /* Dark blue header background */
 }
 
-.button-glow {
-  background: rgba(77, 158, 254, 0.6);
-  box-shadow: 0 0 10px rgba(77, 158, 254, 0.7),
-              0 0 20px rgba(77, 158, 254, 0.4);
-  transition: all 0.3s ease;
+.nav-bg {
+  background-color: #eee; /* Light grey nav background */
 }
 
-.button-glow:hover {
-  background: rgba(77, 158, 254, 0.8);
-  box-shadow: 0 0 15px rgba(77, 158, 254, 0.9),
-              0 0 30px rgba(77, 158, 254, 0.6);
+.lt-title {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 18pt;
+  color: black;
 }
 
 .form-container {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(to bottom, rgba(25, 10, 55, 0.95), rgba(45, 20, 90, 0.95));
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #eeeeee;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .form-label {
-  color: #C3D9F0;
-  font-size: 0.9rem;
-  font-weight: 500;
+  color: #666666;
+  font-size: 14pt;
+  font-weight: normal;
 }
 
 .form-input {
   background-color: white;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  border: 1px solid #eeeeee;
   padding: 0.5rem 0.75rem;
   width: 100%;
-  font-size: 0.9rem;
+  font-size: 14pt;
+  color: black;
 }
 
 .form-select {
@@ -102,6 +100,72 @@
   background-size: 1rem;
 }
 
+.lt-button-primary {
+  background-color: #0077bd;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14pt;
+  height: 48px;
+}
+
+.lt-button-primary:hover {
+  background-color: #0370c0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.lt-button-secondary {
+  background-color: #003f72;
+  color: white;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14pt;
+  height: 48px;
+}
+
+.lt-button-secondary:hover {
+  background-color: #024d87;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h1 {
+  font-size: 50pt;
+  font-weight: 300; /* light */
+}
+
+h2 {
+  font-size: 30pt;
+  font-weight: 300; /* light */
+}
+
+h3 {
+  font-size: 25pt;
+  font-weight: 300; /* light */
+}
+
+h4 {
+  font-size: 20pt;
+  font-weight: 300; /* light */
+}
+
+p {
+  font-size: 14pt;
+  font-weight: normal;
+}
+
+/* Footer styles */
+.footer-text {
+  color: #666666;
+  font-size: 14pt;
+}
+
+.legal-footer {
+  color: #999999;
+  font-size: 12pt;
+  text-align: center;
+}
+
 /* Login page styles */
 .login-container {
   display: grid;
@@ -110,7 +174,7 @@
 }
 
 .login-left {
-  background-color: #e5e7eb;
+  background-color: #f6f6f6;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +182,7 @@
 }
 
 .login-right {
-  background: linear-gradient(to bottom, #10002b, #240046);
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,31 +196,27 @@
 }
 
 .login-title {
-  color: white;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 
-               0 0 8px rgba(77, 213, 254, 0.2);
-  font-size: 2rem;
-  font-weight: bold;
+  color: #024d87;
+  font-size: 30pt;
+  font-weight: 300;
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .login-box {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(to bottom, rgba(25, 10, 55, 0.95), rgba(45, 20, 90, 0.95));
-  border-radius: 16px;
+  border: 1px solid #eeeeee;
+  background: white;
+  border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .login-button {
-  background: rgba(77, 158, 254, 0.6);
-  box-shadow: 0 0 10px rgba(77, 158, 254, 0.7),
-              0 0 20px rgba(77, 158, 254, 0.4);
-  transition: all 0.3s ease;
+  background-color: #0077bd;
+  transition: all 0.2s ease;
   width: 100%;
   padding: 0.75rem;
-  border-radius: 6px;
+  border-radius: 4px;
   color: white;
   font-weight: 500;
   margin-top: 1rem;
@@ -166,20 +226,19 @@
 }
 
 .login-button:hover {
-  background: rgba(77, 158, 254, 0.8);
-  box-shadow: 0 0 15px rgba(77, 158, 254, 0.9),
-              0 0 30px rgba(77, 158, 254, 0.6);
+  background-color: #0370c0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .forgot-password {
-  color: rgba(77, 213, 254, 0.8);
-  font-size: 0.8rem;
+  color: #0077bd;
+  font-size: 14pt;
   text-align: right;
   text-decoration: none;
 }
 
 .forgot-password:hover {
-  color: rgba(77, 213, 254, 1);
+  color: #0370c0;
   text-decoration: underline;
 }
 
@@ -187,7 +246,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* New additions for textarea and file input */
+/* Text area and file input styles */
 textarea.form-input {
   min-height: 120px;
   resize: vertical;
