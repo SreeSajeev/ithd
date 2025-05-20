@@ -1,8 +1,15 @@
 
 import React from 'react';
 import { Search, AlertCircle, ArrowRightLeft, HelpCircle, FileText, BarChart3 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const HelpDeskForm: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleReportProblem = () => {
+    navigate('/report-problem');
+  };
+
   return (
     <div className="form-container w-full max-w-4xl p-8">
       <div className="grid grid-cols-2 gap-x-6 gap-y-5">
@@ -92,35 +99,38 @@ const HelpDeskForm: React.FC = () => {
 
       {/* Action Buttons - First Row */}
       <div className="grid grid-cols-2 gap-6 mt-8">
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+        <button 
+          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          onClick={handleReportProblem}
+        >
           <AlertCircle className="w-5 h-5 mr-2" />
           Report A Problem
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
           <Search className="w-5 h-5 mr-2" />
           Search Issues
         </button>
       </div>
 
       {/* Action Buttons - Second Row */}
-      <div className="grid grid-cols-2 gap-6 mt-6">
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+      <div className="grid grid-cols-2 gap-6 mt-8">
+        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
           <ArrowRightLeft className="w-5 h-5 mr-2" />
           Change Request
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
           <HelpCircle className="w-5 h-5 mr-2" />
           Ask for Clarification
         </button>
       </div>
 
       {/* Action Buttons - Third Row */}
-      <div className="grid grid-cols-2 gap-6 mt-6">
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+      <div className="grid grid-cols-2 gap-6 mt-8">
+        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
           <FileText className="w-5 h-5 mr-2" />
           Download UserID Request Form
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
+        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
           <BarChart3 className="w-5 h-5 mr-2" />
           IT Escalation Matrix
         </button>

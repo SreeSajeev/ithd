@@ -82,9 +82,11 @@ const Login: React.FC = () => {
               <a href="#" className="forgot-password">Forgot Password?</a>
             </div>
             
-            <button type="submit" className="login-button">
-              Log In
-            </button>
+            <div className="flex justify-center">
+              <button type="submit" className="login-button">
+                Log In
+              </button>
+            </div>
           </form>
         </div>
       </div>
