@@ -10,6 +10,18 @@ const HelpDeskForm: React.FC = () => {
     navigate('/report-problem');
   };
 
+  const handleSearchIssue = () => {
+    navigate('/search-issue');
+  };
+
+  const handleChangeRequest = () => {
+    navigate('/change-request');
+  };
+
+  const handleClarification = () => {
+    navigate('/clarification');
+  };
+
   return (
     <div className="form-container w-full max-w-4xl p-8">
       <div className="grid grid-cols-2 gap-x-6 gap-y-5">
@@ -106,7 +118,10 @@ const HelpDeskForm: React.FC = () => {
           <AlertCircle className="w-5 h-5 mr-2" />
           Report A Problem
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
+        <button 
+          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          onClick={handleSearchIssue}
+        >
           <Search className="w-5 h-5 mr-2" />
           Search Issues
         </button>
@@ -114,11 +129,17 @@ const HelpDeskForm: React.FC = () => {
 
       {/* Action Buttons - Second Row */}
       <div className="grid grid-cols-2 gap-6 mt-8">
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
+        <button 
+          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          onClick={handleChangeRequest}
+        >
           <ArrowRightLeft className="w-5 h-5 mr-2" />
           Change Request
         </button>
-        <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full">
+        <button 
+          className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white max-w-[300px] mx-auto w-full"
+          onClick={handleClarification}
+        >
           <HelpCircle className="w-5 h-5 mr-2" />
           Ask for Clarification
         </button>
