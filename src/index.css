@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,60 +34,6 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -97,5 +44,61 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: sans-serif;
   }
+}
+
+/* Custom styles for the IT Helpdesk */
+.helpdesk-bg {
+  background: linear-gradient(to bottom, #10002b, #240046);
+}
+
+.text-glow {
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 
+               0 0 20px rgba(77, 213, 254, 0.5),
+               0 0 30px rgba(77, 213, 254, 0.3);
+}
+
+.button-glow {
+  background: rgba(77, 158, 254, 0.6);
+  box-shadow: 0 0 10px rgba(77, 158, 254, 0.7),
+              0 0 20px rgba(77, 158, 254, 0.4);
+  transition: all 0.3s ease;
+}
+
+.button-glow:hover {
+  background: rgba(77, 158, 254, 0.8);
+  box-shadow: 0 0 15px rgba(77, 158, 254, 0.9),
+              0 0 30px rgba(77, 158, 254, 0.6);
+}
+
+.form-container {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to bottom, rgba(25, 10, 55, 0.95), rgba(45, 20, 90, 0.95));
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.form-label {
+  color: #C3D9F0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-input {
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3e%3c/path%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
 }
