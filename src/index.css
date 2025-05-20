@@ -55,9 +55,8 @@
 
 .text-glow {
   color: white;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 
-               0 0 20px rgba(77, 213, 254, 0.5),
-               0 0 30px rgba(77, 213, 254, 0.3);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 
+               0 0 10px rgba(77, 213, 254, 0.3);
 }
 
 .button-glow {
@@ -101,4 +100,86 @@
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   background-size: 1rem;
+}
+
+/* Login page styles */
+.login-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+.login-left {
+  background-color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-right {
+  background: linear-gradient(to bottom, #10002b, #240046);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 320px;
+  padding: 2rem;
+}
+
+.login-title {
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 
+               0 0 10px rgba(77, 213, 254, 0.3);
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.login-box {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to bottom, rgba(25, 10, 55, 0.95), rgba(45, 20, 90, 0.95));
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-button {
+  background: rgba(77, 158, 254, 0.6);
+  box-shadow: 0 0 10px rgba(77, 158, 254, 0.7),
+              0 0 20px rgba(77, 158, 254, 0.4);
+  transition: all 0.3s ease;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.login-button:hover {
+  background: rgba(77, 158, 254, 0.8);
+  box-shadow: 0 0 15px rgba(77, 158, 254, 0.9),
+              0 0 30px rgba(77, 158, 254, 0.6);
+}
+
+.forgot-password {
+  color: rgba(77, 213, 254, 0.8);
+  font-size: 0.8rem;
+  text-align: right;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  color: rgba(77, 213, 254, 1);
+  text-decoration: underline;
+}
+
+.login-field {
+  margin-bottom: 1.5rem;
 }

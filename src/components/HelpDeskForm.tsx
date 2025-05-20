@@ -103,7 +103,7 @@ const HelpDeskForm: React.FC = () => {
       </div>
 
       {/* Action Buttons - Second Row */}
-      <div className="grid grid-cols-2 gap-6 mt-4">
+      <div className="grid grid-cols-2 gap-6 mt-6">
         <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
           <ArrowRightLeft className="w-5 h-5 mr-2" />
           Change Request
@@ -115,7 +115,7 @@ const HelpDeskForm: React.FC = () => {
       </div>
 
       {/* Action Buttons - Third Row */}
-      <div className="grid grid-cols-2 gap-6 mt-4">
+      <div className="grid grid-cols-2 gap-6 mt-6">
         <button className="button-glow flex items-center justify-center py-3 px-4 rounded-md text-white">
           <FileText className="w-5 h-5 mr-2" />
           Download UserID Request Form
