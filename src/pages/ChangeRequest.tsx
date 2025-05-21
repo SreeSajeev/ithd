@@ -1,32 +1,40 @@
 
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
-import Logo from '../components/Logo';
+import React, { useState } from 'react';
+import { ArrowLeft, ArrowRightLeft } from 'lucide-react';
+import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 
 const ChangeRequest: React.FC = () => {
   const navigate = useNavigate();
+  const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <div className="helpdesk-bg min-h-screen w-full flex flex-col items-center px-4">
-      <div className="w-full max-w-4xl pt-4 flex justify-start">
-        <Logo />
-      </div>
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center">
+      <Header />
       
-      <div className="text-center my-8">
-        <h1 className="text-glow text-5xl font-bold">Change Request</h1>
-      </div>
-      
-      <div className="form-container w-full max-w-4xl p-8 relative">
-        <button 
-          onClick={() => navigate('/')}
-          className="absolute top-6 left-6 text-white hover:text-blue-200 transition-colors"
-        >
-          <ArrowLeft className="w-6 h-6" />
-        </button>
+      <div className="max-w-[1366px] w-full px-4 py-8">
+        <div className="text-center mb-8">
+          <h2 className="text-[30pt] font-light text-lt-darkBlue">Change Request</h2>
+        </div>
         
-        <div className="text-center py-12">
-          <p className="text-white text-xl">This is the Change Request page placeholder — content coming soon.</p>
+        <div className="form-container w-full p-8 relative hover-card">
+          <button 
+            onClick={() => navigate('/')}
+            className="back-button absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors flex items-center"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <ArrowLeft className={`w-6 h-6 ${isHovering ? 'transform -translate-x-1 transition-transform' : 'transition-transform'}`} />
+            <span className="ml-1 text-sm font-medium">Back to Helpdesk</span>
+          </button>
+          
+          <div className="text-center py-12">
+            <div className="mb-8 flex justify-center">
+              <ArrowRightLeft className="w-16 h-16 text-lt-brightBlue animate-pulse" />
+            </div>
+            <p className="text-lt-grey text-xl mb-4">This is the Change Request page placeholder — content coming soon.</p>
+            <p className="text-lt-mutedGrey">Here you will be able to submit and track change requests for IT systems.</p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,40 +1,39 @@
 
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
-import Logo from '../components/Logo';
+import React, { useState } from 'react';
+import { ArrowLeft, Search } from 'lucide-react';
+import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 
 const SearchIssue: React.FC = () => {
   const navigate = useNavigate();
+  const [isHovering, setIsHovering] = useState(false);
 
   return (
     <div className="lt-bg min-h-screen w-full flex flex-col items-center">
-      {/* Header */}
-      <div className="w-full">
-        <div className="header-bg w-full h-[53px] flex items-center justify-between px-8">
-          <Logo />
-          <h1 className="lt-title">IT PORTAL</h1>
-        </div>
-        <div className="nav-bg w-full h-[29px]">
-          {/* Navigation items would go here */}
-        </div>
-      </div>
+      <Header />
       
       <div className="max-w-[1366px] w-full px-4 py-8">
         <div className="text-center mb-8">
           <h2 className="text-[30pt] font-light text-lt-darkBlue">Search Issue</h2>
         </div>
         
-        <div className="form-container w-full p-8 relative">
+        <div className="form-container w-full p-8 relative hover-card">
           <button 
             onClick={() => navigate('/')}
-            className="absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors"
+            className="back-button absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors flex items-center"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className={`w-6 h-6 ${isHovering ? 'transform -translate-x-1 transition-transform' : 'transition-transform'}`} />
+            <span className="ml-1 text-sm font-medium">Back to Helpdesk</span>
           </button>
           
           <div className="text-center py-12">
-            <p className="text-lt-grey text-xl">This is the Search Issue page placeholder — content coming soon.</p>
+            <div className="mb-8 flex justify-center">
+              <Search className="w-16 h-16 text-lt-brightBlue animate-bounce" />
+            </div>
+            <p className="text-lt-grey text-xl mb-4">This is the Search Issue page placeholder — content coming soon.</p>
+            <p className="text-lt-mutedGrey">Here you will be able to search for and track the status of reported issues.</p>
           </div>
         </div>
       </div>
