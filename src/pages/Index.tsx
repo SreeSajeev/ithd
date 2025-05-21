@@ -1,46 +1,213 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
-import HelpDeskForm from '../components/HelpDeskForm';
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { AlertCircle, FileText, HelpCircle, Search, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const Index = () => {
-  const [loaded, setLoaded] = useState(false);
+const Index: React.FC = () => {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center">
-      <Header />
+    <div className="min-h-screen flex flex-col bg-lt-offWhite">
+      <Header title="IT HELPDESK" />
       
-      <div className="max-w-[1366px] w-full px-4 py-8">
+      <motion.div 
+        className="container mx-auto py-10 px-4 flex-grow"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <motion.div 
-          className="text-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+          variants={itemVariants}
         >
-          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
-            IT HELPDESK
-            <motion.span
-              className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
-              initial={{ width: "0%", x: "-50%" }}
-              animate={{ width: loaded ? "60%" : "0%", x: "-50%" }}
-              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-            />
-          </h2>
+          <h1 className="text-4xl md:text-5xl font-light text-lt-darkBlue mb-4">Welcome to IT Support</h1>
+          <p className="text-xl text-lt-grey max-w-2xl mx-auto">
+            Please select from the options below to submit a request or view existing tickets
+          </p>
         </motion.div>
         
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12"
+          variants={containerVariants}
         >
-          <HelpDeskForm />
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertCircle className="w-8 h-8 text-red-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Report a Problem</h3>
+            <p className="text-lt-grey mb-6">
+              Submit a ticket for any technical issues you are experiencing
+            </p>
+            <Button 
+              onClick={() => navigate('/report-problem')} 
+              className="lt-button-primary w-full"
+            >
+              Report Problem
+            </Button>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                <HelpCircle className="w-8 h-8 text-blue-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Ask for Clarification</h3>
+            <p className="text-lt-grey mb-6">
+              Request clarification on a process, system or application
+            </p>
+            <Button 
+              onClick={() => navigate('/clarification')} 
+              className="lt-button-primary w-full"
+            >
+              Request Clarification
+            </Button>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                <FileText className="w-8 h-8 text-green-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Change Request</h3>
+            <p className="text-lt-grey mb-6">
+              Submit a request for a change to an existing system or application
+            </p>
+            <Button 
+              onClick={() => navigate('/change-request')} 
+              className="lt-button-primary w-full"
+            >
+              Request Change
+            </Button>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
+                <Search className="w-8 h-8 text-purple-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Search Issues</h3>
+            <p className="text-lt-grey mb-6">
+              Search for existing tickets and view their status
+            </p>
+            <Button 
+              onClick={() => navigate('/search-issue')} 
+              className="lt-button-primary w-full"
+            >
+              Search Issues
+            </Button>
+          </motion.div>
         </motion.div>
-      </div>
+        
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          variants={containerVariants}
+        >
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg p-8"
+            variants={itemVariants}
+          >
+            <h3 className="text-xl font-semibold mb-4">IT Staff Access</h3>
+            <p className="text-lt-grey mb-6">
+              For IT staff members only. Access ticket management system and performance dashboard.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={() => navigate('/login-page')} 
+                className="lt-button-secondary flex items-center justify-center"
+              >
+                <User className="w-5 h-5 mr-2" />
+                IT Staff Login
+              </Button>
+              <Button 
+                onClick={() => navigate('/it-helpdesk-view')} 
+                className="lt-button-secondary flex items-center justify-center"
+              >
+                Direct to Helpdesk View
+              </Button>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg p-8"
+            variants={itemVariants}
+          >
+            <h3 className="text-xl font-semibold mb-4">Need Help?</h3>
+            <p className="text-lt-grey mb-4">
+              Contact the IT support team for immediate assistance:
+            </p>
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex items-center">
+                <span className="font-semibold w-24">Email:</span>
+                <a href="mailto:itsupport@ltvalves.com" className="text-lt-brightBlue hover:underline">
+                  itsupport@ltvalves.com
+                </a>
+              </div>
+              <div className="flex items-center">
+                <span className="font-semibold w-24">Phone:</span>
+                <span>+91 44 2747 0405</span>
+              </div>
+              <div className="flex items-center">
+                <span className="font-semibold w-24">Hours:</span>
+                <span>8:00 AM - 6:00 PM (IST), Mon-Fri</span>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+      
+      <footer className="bg-white py-4 border-t border-lt-lightGrey mt-auto">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-lt-mutedGrey">
+            © 2023 L&T Valves IT Helpdesk. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

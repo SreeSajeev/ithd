@@ -11,6 +11,9 @@ import ReportProblem from "./pages/ReportProblem";
 import Clarification from "./pages/Clarification";
 import ChangeRequest from "./pages/ChangeRequest";
 import SearchIssue from "./pages/SearchIssue";
+import LoginPage from "./pages/LoginPage";
+import ITHelpdeskView from "./pages/ITHelpdeskView";
+import ITPerformanceDashboard from "./pages/ITPerformanceDashboard";
 
 const queryClient = new QueryClient();
 
@@ -22,11 +25,14 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/login-page" element={<LoginPage />} />
           <Route path="/" element={<Index />} />
           <Route path="/report-problem" element={<ReportProblem />} />
           <Route path="/clarification" element={<Clarification />} />
           <Route path="/change-request" element={<ChangeRequest />} />
           <Route path="/search-issue" element={<SearchIssue />} />
+          <Route path="/it-helpdesk-view" element={<ITHelpdeskView />} />
+          <Route path="/it-performance-dashboard" element={<ITPerformanceDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
