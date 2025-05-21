@@ -1,25 +1,91 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, Search, CheckCircle, Upload } from 'lucide-react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 const SearchIssue: React.FC = () => {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeField, setActiveField] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>('');
+  
+  // Form states
+  const [problemDescription, setProblemDescription] = useState('');
+  const [year, setYear] = useState('');
+  const [reporterId, setReporterId] = useState('');
+  
+  // Checkbox states
+  const [searchAreas, setSearchAreas] = useState({
+    subject: true,
+    transaction: true,
+    inputData: true,
+    systemError: true,
+    responseThread: true,
+    issueNumber: true
+  });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!problemDescription) {
+      toast.error('Please fill in the required Problem Description field.');
+      return;
+    }
+    
+    toast.success('Search request submitted!');
+    // Here would be the search submission logic
+  };
 
-    return () => clearTimeout(timer);
-  }, []);
+  const handleFocus = (fieldName: string) => {
+    setActiveField(fieldName);
+  };
+
+  const handleBlur = () => {
+    setActiveField(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
+      toast.info(`File "${e.target.files[0].name}" selected.`);
+    }
+  };
+
+  const handleCheckboxChange = (area: keyof typeof searchAreas) => {
+    setSearchAreas({
+      ...searchAreas,
+      [area]: !searchAreas[area]
+    });
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center">
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-lt-darkBlue to-[#1a3f64]">
       <Header title="SEARCH ISSUE" />
       
       <div className="max-w-[1366px] w-full px-4 py-8">
@@ -29,120 +95,199 @@ const SearchIssue: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
+          <h2 className="text-[30pt] font-light text-white relative inline-block">
             Search Issue
             <motion.span
               className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
               initial={{ width: "0%", x: "-50%" }}
-              animate={{ width: isVisible ? "60%" : "0%", x: "-50%" }}
+              animate={{ width: "60%", x: "-50%" }}
               transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             />
           </h2>
         </motion.div>
         
         <motion.div 
-          className="form-container w-full p-8 relative hover-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          className="form-container w-full p-8 relative hover-card bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-lg"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
           <motion.button 
             onClick={() => navigate('/')}
-            className="back-button absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors flex items-center"
+            className="back-button absolute top-6 left-6 text-white hover:text-lt-brightBlue transition-colors flex items-center"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             whileHover={{ x: -5 }}
             whileTap={{ scale: 0.97 }}
+            variants={itemVariants}
           >
             <ArrowLeft className={`w-6 h-6 ${isHovering ? 'transform -translate-x-1 transition-transform' : 'transition-transform'}`} />
             <span className="ml-1 text-sm font-medium">Back to Helpdesk</span>
           </motion.button>
           
-          <motion.div 
-            className="text-center py-12"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.2
-                }
-              }
-            }}
-          >
-            <motion.div 
-              className="mb-8 flex justify-center"
-              variants={{
-                hidden: { opacity: 0, scale: 0.8 },
-                visible: {
-                  opacity: 1,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 100
-                  }
-                }
-              }}
-            >
-              <motion.div
-                animate={{
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              >
-                <Search className="w-16 h-16 text-lt-brightBlue" />
-              </motion.div>
-            </motion.div>
-            <motion.p 
-              className="text-lt-grey text-xl mb-4"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 100 }
-                }
-              }}
-            >
-              This is the Search Issue page placeholder — content coming soon.
-            </motion.p>
-            <motion.p 
-              className="text-lt-mutedGrey"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 100, delay: 0.2 }
-                }
-              }}
-            >
-              Here you will be able to search for and track the status of reported issues.
-            </motion.p>
-            
-            <motion.div 
-              className="mt-12 max-w-md mx-auto relative"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              <input
-                type="text"
-                className="form-input rounded-full bg-white pr-12"
-                placeholder="Search for issues..."
-                disabled
+          <form onSubmit={handleSearchSubmit} className="pt-12">
+            <motion.div className="mb-6 relative" variants={itemVariants}>
+              <label htmlFor="problemDescription" className={`form-label block mb-2 text-white ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
+                Problem Description <span className="text-red-500 required-indicator">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="problemDescription" 
+                className="form-input" 
+                placeholder="Enter problem description" 
+                required
+                value={problemDescription}
+                onChange={(e) => setProblemDescription(e.target.value)}
+                onFocus={() => handleFocus('problemDescription')}
+                onBlur={handleBlur}
               />
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                <Search className="w-5 h-5 text-lt-mutedGrey" />
+              <div className={`input-focus-indicator ${activeField === 'problemDescription' ? 'w-full' : 'w-0'}`}></div>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <motion.div className="relative" variants={itemVariants}>
+                <label htmlFor="year" className={`form-label block mb-2 text-white ${activeField === 'year' ? 'text-lt-brightBlue' : ''}`}>
+                  Year
+                </label>
+                <select 
+                  id="year" 
+                  className="form-input form-select" 
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  onFocus={() => handleFocus('year')}
+                  onBlur={handleBlur}
+                >
+                  <option value="">Select Year</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                </select>
+              </motion.div>
+              
+              <motion.div className="relative" variants={itemVariants}>
+                <label htmlFor="reporterId" className={`form-label block mb-2 text-white ${activeField === 'reporterId' ? 'text-lt-brightBlue' : ''}`}>
+                  Reporter ID
+                </label>
+                <input 
+                  type="text" 
+                  id="reporterId" 
+                  className="form-input" 
+                  placeholder="Enter reporter ID" 
+                  value={reporterId}
+                  onChange={(e) => setReporterId(e.target.value)}
+                  onFocus={() => handleFocus('reporterId')}
+                  onBlur={handleBlur}
+                />
+                <div className={`input-focus-indicator ${activeField === 'reporterId' ? 'w-full' : 'w-0'}`}></div>
+              </motion.div>
+            </div>
+            
+            <motion.div className="mb-8" variants={itemVariants}>
+              <h3 className="text-white text-xl mb-4">Recommended Areas to Search</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="subject" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.subject}
+                    onChange={() => handleCheckboxChange('subject')}
+                  />
+                  <label htmlFor="subject" className="text-white cursor-pointer">Subject</label>
+                </div>
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="transaction" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.transaction}
+                    onChange={() => handleCheckboxChange('transaction')}
+                  />
+                  <label htmlFor="transaction" className="text-white cursor-pointer">Transaction</label>
+                </div>
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="inputData" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.inputData}
+                    onChange={() => handleCheckboxChange('inputData')}
+                  />
+                  <label htmlFor="inputData" className="text-white cursor-pointer">Input Data</label>
+                </div>
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="systemError" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.systemError}
+                    onChange={() => handleCheckboxChange('systemError')}
+                  />
+                  <label htmlFor="systemError" className="text-white cursor-pointer">System Error</label>
+                </div>
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="responseThread" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.responseThread}
+                    onChange={() => handleCheckboxChange('responseThread')}
+                  />
+                  <label htmlFor="responseThread" className="text-white cursor-pointer">Response Thread</label>
+                </div>
+                <div className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id="issueNumber" 
+                    className="w-4 h-4 mr-2 accent-lt-brightBlue"
+                    checked={searchAreas.issueNumber}
+                    onChange={() => handleCheckboxChange('issueNumber')}
+                  />
+                  <label htmlFor="issueNumber" className="text-white cursor-pointer">Issue Number</label>
+                </div>
               </div>
             </motion.div>
-          </motion.div>
+            
+            <motion.div className="mb-8 relative" variants={itemVariants}>
+              <label htmlFor="attachment" className={`form-label block mb-2 text-white ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
+                Attachment
+              </label>
+              <div className="flex gap-3 items-center">
+                <div className="file-input-wrapper">
+                  <label className="file-input-button bg-white/20 hover:bg-white/30 text-white transition-colors flex items-center">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Choose File
+                    <input 
+                      type="file" 
+                      id="attachment" 
+                      className="file-input" 
+                      onChange={handleFileChange}
+                      onFocus={() => handleFocus('attachment')}
+                      onBlur={handleBlur}
+                    />
+                  </label>
+                </div>
+                <span className="file-name text-white">{fileName || "No File Chosen"}</span>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="flex justify-center mt-12"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <button 
+                type="submit" 
+                className="lt-button-primary btn-ripple min-w-[180px] w-full max-w-xs flex items-center justify-center bg-lt-brightBlue"
+              >
+                <Search className="w-5 h-5 mr-2" />
+                Search Issue
+              </button>
+            </motion.div>
+          </form>
         </motion.div>
       </div>
     </div>

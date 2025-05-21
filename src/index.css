@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 
 @tailwind base;
@@ -129,16 +130,18 @@
   color: white;
   border-radius: 4px;
   transition: all 0.3s ease;
-  font-size: 13pt; /* Reduced from 14pt */
-  height: 48px;
-  padding: 0 15px; /* Added horizontal padding */
+  font-size: 16pt;
+  height: auto;
+  min-height: 54px;
+  padding: 12px 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Added gap between icon and text */
+  gap: 10px;
+  line-height: 1.4;
 }
 
 .lt-button-primary:hover {
@@ -157,16 +160,18 @@
   color: white;
   border-radius: 4px;
   transition: all 0.3s ease;
-  font-size: 13pt; /* Reduced from 14pt */
-  height: 48px;
-  padding: 0 15px; /* Added horizontal padding */
+  font-size: 16pt;
+  height: auto;
+  min-height: 54px;
+  padding: 12px 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Added gap between icon and text */
+  gap: 10px;
+  line-height: 1.4;
 }
 
 .lt-button-secondary:hover {

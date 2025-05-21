@@ -67,8 +67,8 @@ const Header: React.FC<HeaderProps> = ({ title = "IT PORTAL" }) => {
         </div>
       </div>
       
+      {/* Empty nav bar - dashboard section removed */}
       <div className="nav-bg w-full h-[29px] flex items-center px-4 md:px-8">
-        {/* Dashboard link removed */}
       </div>
       
       {/* Mobile menu */}
@@ -79,7 +79,6 @@ const Header: React.FC<HeaderProps> = ({ title = "IT PORTAL" }) => {
       >
         <div className="p-4">
           <h1 className="text-lt-darkBlue font-bold text-xl mb-2">{title}</h1>
-          {/* Dashboard mobile menu item removed */}
         </div>
       </div>
     </div>

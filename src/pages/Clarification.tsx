@@ -1,25 +1,74 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, HelpCircle } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Upload } from 'lucide-react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 const Clarification: React.FC = () => {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeField, setActiveField] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>('');
+  
+  // Form states
+  const [problemDescription, setProblemDescription] = useState('');
+  const [transactionPath, setTransactionPath] = useState('');
+  const [problemStatement, setProblemStatement] = useState('');
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!problemDescription) {
+      toast.error('Please fill in the required Problem Description field.');
+      return;
+    }
+    
+    toast.success('Your clarification request has been submitted successfully!');
+    // Here would be the submission logic
+  };
 
-    return () => clearTimeout(timer);
-  }, []);
+  const handleFocus = (fieldName: string) => {
+    setActiveField(fieldName);
+  };
+
+  const handleBlur = () => {
+    setActiveField(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
+      toast.info(`File "${e.target.files[0].name}" selected.`);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center">
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-lt-darkBlue to-[#1a3f64]">
       <Header title="CLARIFICATION" />
       
       <div className="max-w-[1366px] w-full px-4 py-8">
@@ -29,101 +78,126 @@ const Clarification: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
+          <h2 className="text-[30pt] font-light text-white relative inline-block">
             Clarification
             <motion.span
               className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
               initial={{ width: "0%", x: "-50%" }}
-              animate={{ width: isVisible ? "60%" : "0%", x: "-50%" }}
+              animate={{ width: "60%", x: "-50%" }}
               transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             />
           </h2>
         </motion.div>
         
         <motion.div 
-          className="form-container w-full p-8 relative hover-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          className="form-container w-full p-8 relative hover-card bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-lg"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
           <motion.button 
             onClick={() => navigate('/')}
-            className="back-button absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors flex items-center"
+            className="back-button absolute top-6 left-6 text-white hover:text-lt-brightBlue transition-colors flex items-center"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             whileHover={{ x: -5 }}
             whileTap={{ scale: 0.97 }}
+            variants={itemVariants}
           >
             <ArrowLeft className={`w-6 h-6 ${isHovering ? 'transform -translate-x-1 transition-transform' : 'transition-transform'}`} />
             <span className="ml-1 text-sm font-medium">Back to Helpdesk</span>
           </motion.button>
           
-          <motion.div 
-            className="text-center py-12"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.2
-                }
-              }
-            }}
-          >
-            <motion.div 
-              className="mb-8 flex justify-center"
-              variants={{
-                hidden: { opacity: 0, scale: 0.8 },
-                visible: {
-                  opacity: 1,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 100
-                  }
-                }
-              }}
-            >
-              <HelpCircle className="w-16 h-16 text-lt-brightBlue animate-pulse" />
+          <form onSubmit={handleSubmit} className="pt-12">
+            <motion.div className="mb-6 relative" variants={itemVariants}>
+              <label htmlFor="problemDescription" className={`form-label block mb-2 text-white ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
+                Problem Description <span className="text-red-500 required-indicator">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="problemDescription" 
+                className="form-input" 
+                placeholder="Enter problem description" 
+                required
+                value={problemDescription}
+                onChange={(e) => setProblemDescription(e.target.value)}
+                onFocus={() => handleFocus('problemDescription')}
+                onBlur={handleBlur}
+              />
+              <div className={`input-focus-indicator ${activeField === 'problemDescription' ? 'w-full' : 'w-0'}`}></div>
             </motion.div>
-            <motion.p 
-              className="text-lt-grey text-xl mb-4"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 100 }
-                }
-              }}
-            >
-              This is the Clarification page placeholder — content coming soon.
-            </motion.p>
-            <motion.p 
-              className="text-lt-mutedGrey"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 100, delay: 0.2 }
-                }
-              }}
-            >
-              Here you will be able to request clarification on IT-related questions.
-            </motion.p>
+            
+            <motion.div className="mb-6 relative" variants={itemVariants}>
+              <label htmlFor="transactionPath" className={`form-label block mb-2 text-white ${activeField === 'transactionPath' ? 'text-lt-brightBlue' : ''}`}>
+                Transaction/Menupath/Hardware
+              </label>
+              <input 
+                type="text" 
+                id="transactionPath" 
+                className="form-input" 
+                placeholder="Enter transaction, menu path or hardware details"
+                value={transactionPath}
+                onChange={(e) => setTransactionPath(e.target.value)}
+                onFocus={() => handleFocus('transactionPath')}
+                onBlur={handleBlur}
+              />
+              <div className={`input-focus-indicator ${activeField === 'transactionPath' ? 'w-full' : 'w-0'}`}></div>
+            </motion.div>
+            
+            <motion.div className="mb-6 relative" variants={itemVariants}>
+              <label htmlFor="problemStatement" className={`form-label block mb-2 text-white ${activeField === 'problemStatement' ? 'text-lt-brightBlue' : ''}`}>
+                Problem Statement / Change Reason
+              </label>
+              <textarea 
+                id="problemStatement" 
+                className="form-input min-h-32" 
+                placeholder="Enter text here"
+                value={problemStatement}
+                onChange={(e) => setProblemStatement(e.target.value)}
+                onFocus={() => handleFocus('problemStatement')}
+                onBlur={handleBlur}
+              />
+              <div className={`input-focus-indicator ${activeField === 'problemStatement' ? 'w-full' : 'w-0'}`}></div>
+            </motion.div>
+            
+            <motion.div className="mb-8 relative" variants={itemVariants}>
+              <label htmlFor="attachment" className={`form-label block mb-2 text-white ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
+                Attachment
+              </label>
+              <div className="flex gap-3 items-center">
+                <div className="file-input-wrapper">
+                  <label className="file-input-button bg-white/20 hover:bg-white/30 text-white transition-colors flex items-center">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Choose File
+                    <input 
+                      type="file" 
+                      id="attachment" 
+                      className="file-input" 
+                      onChange={handleFileChange}
+                      onFocus={() => handleFocus('attachment')}
+                      onBlur={handleBlur}
+                    />
+                  </label>
+                </div>
+                <span className="file-name text-white">{fileName || "No File Chosen"}</span>
+              </div>
+            </motion.div>
             
             <motion.div 
-              className="mt-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              className="flex justify-center mt-10"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="w-16 h-1 bg-lt-lightGrey mx-auto rounded-full"></div>
+              <button 
+                type="submit" 
+                className="lt-button-primary btn-ripple min-w-[180px] w-full max-w-xs flex items-center justify-center"
+              >
+                <HelpCircle className="w-5 h-5 mr-2" />
+                Send to IT Helpdesk
+              </button>
             </motion.div>
-          </motion.div>
+          </form>
         </motion.div>
       </div>
     </div>
