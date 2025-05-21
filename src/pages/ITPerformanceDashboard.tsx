@@ -146,7 +146,7 @@ const ITPerformanceDashboard: React.FC = () => {
           
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey hover-card">
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-2">Most Active Member</h3>
-            <div className="text-2xl font-light text-lt-brightBlue">Rajesh K.</div>
+            <div className="text-2xl font-light text-lt-brightBlue">Lorem Ipsum.</div>
             <div className="text-sm text-lt-grey mt-2">42 tickets resolved this month</div>
           </div>
         </motion.div>
