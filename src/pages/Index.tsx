@@ -164,12 +164,7 @@ const Index: React.FC = () => {
                 <User className="w-5 h-5 mr-2" />
                 IT Staff Login
               </Button>
-              <Button 
-                onClick={() => navigate('/it-helpdesk-view')} 
-                className="lt-button-secondary flex items-center justify-center"
-              >
-                Direct to Helpdesk View
-              </Button>
+              
             </div>
           </motion.div>
           
@@ -190,11 +185,11 @@ const Index: React.FC = () => {
               </div>
               <div className="flex items-center">
                 <span className="font-semibold w-24">Phone:</span>
-                <span>+91 44 2747 0405</span>
+                <span>+91 xxxxxxxxxx</span>
               </div>
               <div className="flex items-center">
                 <span className="font-semibold w-24">Hours:</span>
-                <span>8:00 AM - 6:00 PM (IST), Mon-Fri</span>
+                <span>9:00 AM - 6:00 PM (IST), Mon-Fri</span>
               </div>
             </div>
           </motion.div>
