@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Search, AlertCircle, ArrowRightLeft, HelpCircle, FileText, BarChart3, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -259,7 +258,7 @@ const HelpDeskForm: React.FC = () => {
         >
           <motion.button 
             type="button"
-            className="lt-button-primary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onClick={handleReportProblem}
             onMouseEnter={() => setHoverButton('report')}
             onMouseLeave={() => setHoverButton(null)}
@@ -272,7 +271,7 @@ const HelpDeskForm: React.FC = () => {
           </motion.button>
           <motion.button 
             type="button"
-            className="lt-button-secondary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onClick={handleSearchIssue}
             onMouseEnter={() => setHoverButton('search')}
             onMouseLeave={() => setHoverButton(null)}
@@ -285,7 +284,7 @@ const HelpDeskForm: React.FC = () => {
           </motion.button>
           <motion.button 
             type="button"
-            className="lt-button-primary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onClick={handleChangeRequest}
             onMouseEnter={() => setHoverButton('change')}
             onMouseLeave={() => setHoverButton(null)}
@@ -305,7 +304,7 @@ const HelpDeskForm: React.FC = () => {
         >
           <motion.button 
             type="button"
-            className="lt-button-secondary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onClick={handleClarification}
             onMouseEnter={() => setHoverButton('clarification')}
             onMouseLeave={() => setHoverButton(null)}
@@ -318,7 +317,7 @@ const HelpDeskForm: React.FC = () => {
           </motion.button>
           <motion.button 
             type="button"
-            className="lt-button-primary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-primary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onMouseEnter={() => setHoverButton('download')}
             onMouseLeave={() => setHoverButton(null)}
             variants={buttonVariants}
@@ -330,7 +329,7 @@ const HelpDeskForm: React.FC = () => {
           </motion.button>
           <motion.button 
             type="button"
-            className="lt-button-secondary btn-ripple flex items-center justify-center max-w-[180px] w-full mx-auto"
+            className="lt-button-secondary flex items-center justify-center max-w-[180px] w-full mx-auto"
             onMouseEnter={() => setHoverButton('escalation')}
             onMouseLeave={() => setHoverButton(null)}
             variants={buttonVariants}

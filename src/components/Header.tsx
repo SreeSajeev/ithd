@@ -32,11 +32,6 @@ const Header: React.FC<HeaderProps> = ({ title = "IT PORTAL" }) => {
     navigate('/');
     setMobileMenuOpen(false);
   };
-
-  const handleDashboardClick = () => {
-    navigate('/');
-    setMobileMenuOpen(false);
-  };
   
   return (
     <div className={`w-full sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-lg' : ''}`}>
@@ -72,16 +67,8 @@ const Header: React.FC<HeaderProps> = ({ title = "IT PORTAL" }) => {
         </div>
       </div>
       
-      <div className={`nav-bg w-full h-[29px] flex items-center px-4 md:px-8 ${scrolled ? 'shadow-sm' : ''}`}>
-        <div 
-          onClick={handleDashboardClick}
-          className="text-sm font-medium text-lt-darkBlue hover:text-lt-brightBlue transition-colors duration-300 cursor-pointer flex items-center"
-        >
-          <span className="relative overflow-hidden group">
-            Dashboard
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-lt-brightBlue group-hover:w-full transition-all duration-300"></span>
-          </span>
-        </div>
+      <div className="nav-bg w-full h-[29px] flex items-center px-4 md:px-8">
+        {/* Dashboard link removed */}
       </div>
       
       {/* Mobile menu */}
@@ -92,12 +79,7 @@ const Header: React.FC<HeaderProps> = ({ title = "IT PORTAL" }) => {
       >
         <div className="p-4">
           <h1 className="text-lt-darkBlue font-bold text-xl mb-2">{title}</h1>
-          <div 
-            onClick={handleDashboardClick} 
-            className="py-2 px-4 hover:bg-lt-lightGrey rounded-md cursor-pointer text-lt-darkBlue transition-colors duration-200"
-          >
-            Dashboard
-          </div>
+          {/* Dashboard mobile menu item removed */}
         </div>
       </div>
     </div>
