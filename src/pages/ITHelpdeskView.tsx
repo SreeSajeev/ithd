@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download, Search, Upload } from 'lucide-react';
+import { ArrowLeft, Download, Search, Upload, ExternalLink } from 'lucide-react';
 import Header from '../components/Header';
 import { Button } from "@/components/ui/button";
 import {
@@ -84,6 +84,10 @@ const ITHelpdeskView: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleGoToTicket = (ticketId: number) => {
+    navigate(`/ticket-summary`, { state: { ticketId } });
   };
 
   return (
@@ -269,6 +273,7 @@ const ITHelpdeskView: React.FC = () => {
                   <TableHead className="font-semibold">Priority</TableHead>
                   <TableHead className="font-semibold">Assigned To</TableHead>
                   <TableHead className="font-semibold">Date Created</TableHead>
+                  <TableHead className="font-semibold">Go to Ticket</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -301,6 +306,17 @@ const ITHelpdeskView: React.FC = () => {
                     </TableCell>
                     <TableCell>{ticket.assignedTo}</TableCell>
                     <TableCell>{ticket.dateCreated}</TableCell>
+                    <TableCell>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleGoToTicket(ticket.id)}
+                        className="flex items-center justify-center text-lt-brightBlue hover:text-lt-darkBlue"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-1" />
+                        <span>Details</span>
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
