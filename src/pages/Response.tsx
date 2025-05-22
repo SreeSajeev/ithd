@@ -253,17 +253,20 @@ const Response: React.FC = () => {
             variants={itemVariants}
             className="flex justify-end"
           >
-            <Button
-              className="lt-button-primary flex items-center gap-2"
-              disabled={loading}
-              onClick={handleSubmit}
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Send className="h-4 w-4" />
-              {loading ? "Sending..." : "Reply to User"}
-            </Button>
+              <Button
+                className="lt-button-primary flex items-center gap-2"
+                disabled={loading}
+                onClick={handleSubmit}
+              >
+                <Send className="h-4 w-4" />
+                {loading ? "Sending..." : "Reply to User"}
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>

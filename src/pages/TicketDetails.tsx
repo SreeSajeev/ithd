@@ -221,15 +221,18 @@ const TicketDetails: React.FC = () => {
                   >
                     Response
                   </Button>
-                  <Button 
-                    className="lt-button-primary"
-                    disabled={loading}
-                    onClick={handleSubmit}
+                  <motion.div
                     whileHover={{ scale: 1.03 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    {loading ? "Sending..." : "Send"}
-                  </Button>
+                    <Button 
+                      className="lt-button-primary"
+                      disabled={loading}
+                      onClick={handleSubmit}
+                    >
+                      {loading ? "Sending..." : "Send"}
+                    </Button>
+                  </motion.div>
                 </motion.div>
               </div>
             </motion.div>
