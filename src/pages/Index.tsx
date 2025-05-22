@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { AlertCircle, FileText, HelpCircle, Search, User } from 'lucide-react';
+import { AlertCircle, FileText, HelpCircle, Search, User, Download, GitBranch } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Index: React.FC = () => {
@@ -52,7 +52,7 @@ const Index: React.FC = () => {
         </motion.div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12"
           variants={containerVariants}
         >
           <motion.div 
@@ -140,6 +140,58 @@ const Index: React.FC = () => {
               className="lt-button-primary w-full"
             >
               Search Issues
+            </Button>
+          </motion.div>
+
+          {/* New Card: Download UserID Form */}
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center">
+                <Download className="w-8 h-8 text-amber-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">Download UserID Form</h3>
+            <p className="text-lt-grey mb-6">
+              Access and download the official company UserID form
+            </p>
+            <Button 
+              onClick={() => {
+                // This would typically download a file
+                alert('UserID form download initiated');
+              }} 
+              className="lt-button-primary w-full"
+            >
+              Download Now
+            </Button>
+          </motion.div>
+
+          {/* New Card: IT Escalation Matrix */}
+          <motion.div 
+            className="bg-white rounded-lg shadow-lg hover-card p-8 text-center"
+            variants={itemVariants}
+            whileHover={{ y: -5, boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)" }}
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-cyan-100 flex items-center justify-center">
+                <GitBranch className="w-8 h-8 text-cyan-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-semibold mb-3">IT Escalation Matrix</h3>
+            <p className="text-lt-grey mb-6">
+              Check who to contact for issue escalations across functions
+            </p>
+            <Button 
+              onClick={() => {
+                // This would typically open the escalation flow view
+                alert('Escalation matrix view will open');
+              }} 
+              className="lt-button-primary w-full"
+            >
+              View Escalation Flow
             </Button>
           </motion.div>
         </motion.div>
