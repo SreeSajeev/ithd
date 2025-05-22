@@ -14,6 +14,9 @@ import SearchIssue from "./pages/SearchIssue";
 import LoginPage from "./pages/LoginPage";
 import ITHelpdeskView from "./pages/ITHelpdeskView";
 import ITPerformanceDashboard from "./pages/ITPerformanceDashboard";
+import TicketSummary from "./pages/TicketSummary";
+import TicketDetails from "./pages/TicketDetails";
+import Response from "./pages/Response";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ const App = () => (
           <Route path="/search-issue" element={<SearchIssue />} />
           <Route path="/it-helpdesk-view" element={<ITHelpdeskView />} />
           <Route path="/it-performance-dashboard" element={<ITPerformanceDashboard />} />
+          <Route path="/ticket-summary" element={<TicketSummary />} />
+          <Route path="/ticket-details" element={<TicketDetails />} />
+          <Route path="/response" element={<Response />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
