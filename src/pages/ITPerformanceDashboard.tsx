@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, BarChart, Download, Calendar } from 'lucide-react';
+import { ArrowLeft, Download, Calendar } from 'lucide-react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -268,7 +268,7 @@ const ITPerformanceDashboard: React.FC = () => {
           </div>
         </motion.div>
         
-        {/* New Chart - Tickets Solved by Agent */}
+        {/* Tickets Solved by Agent */}
         <motion.div 
           className="grid grid-cols-1 gap-6 mb-8"
           variants={itemVariants}
@@ -277,7 +277,7 @@ const ITPerformanceDashboard: React.FC = () => {
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Tickets Solved by Agent</h3>
             <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart
+                <RechartsBarChart
                   data={ticketsByAgentData}
                   margin={{
                     top: 5,
@@ -296,13 +296,13 @@ const ITPerformanceDashboard: React.FC = () => {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Bar>
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </div>
           </div>
         </motion.div>
         
-        {/* Priority Breakdown and New Charts */}
+        {/* Priority Breakdown and SLA Compliance */}
         <motion.div 
           className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
           variants={itemVariants}
@@ -312,7 +312,7 @@ const ITPerformanceDashboard: React.FC = () => {
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Priority Breakdown of Pending Tickets</h3>
             <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart
+                <RechartsBarChart
                   data={priorityData}
                   margin={{
                     top: 5,
@@ -331,7 +331,7 @@ const ITPerformanceDashboard: React.FC = () => {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Bar>
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -371,7 +371,7 @@ const ITPerformanceDashboard: React.FC = () => {
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Ticket Aging Analysis</h3>
             <div style={{ width: '100%', height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart
+                <RechartsBarChart
                   data={ticketAgingData}
                   margin={{
                     top: 5,
@@ -386,7 +386,7 @@ const ITPerformanceDashboard: React.FC = () => {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="tickets" name="Number of Tickets" fill="#0370c0" />
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </div>
           </div>
