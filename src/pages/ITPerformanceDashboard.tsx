@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ArrowLeft, BarChart, Download } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, BarChart, Download, Calendar } from 'lucide-react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -21,7 +21,10 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
+  Legend,
+  AreaChart,
+  Area
 } from "recharts";
 import { Button } from '@/components/ui/button';
 
@@ -48,8 +51,36 @@ const priorityData = [
   { name: 'Low', value: 10, color: '#10b981' },
 ];
 
+// New chart data
+const ticketsByAgentData = [
+  { name: 'Alice', tickets: 45, color: '#0370c0' },
+  { name: 'Bob', tickets: 32, color: '#024d87' },
+  { name: 'Charlie', tickets: 38, color: '#10b981' },
+  { name: 'David', tickets: 27, color: '#3b82f6' },
+  { name: 'Emma', tickets: 42, color: '#8b5cf6' },
+];
+
+const slaComplianceData = [
+  { name: 'Jan', compliance: 92 },
+  { name: 'Feb', compliance: 89 },
+  { name: 'Mar', compliance: 93 },
+  { name: 'Apr', compliance: 97 },
+  { name: 'May', compliance: 94 },
+  { name: 'Jun', compliance: 95 },
+  { name: 'Jul', compliance: 98 },
+];
+
+const ticketAgingData = [
+  { name: '1-3 Days', tickets: 42 },
+  { name: '4-7 Days', tickets: 28 },
+  { name: '8-14 Days', tickets: 15 },
+  { name: '15-30 Days', tickets: 8 },
+  { name: '30+ Days', tickets: 5 },
+];
+
 const chartConfig = {
   tickets: { label: 'Tickets', color: '#0370c0' },
+  compliance: { label: 'Compliance %', color: '#10b981' },
   application: { label: 'Application', color: '#0370c0' },
   infrastructure: { label: 'Infrastructure', color: '#024d87' },
   network: { label: 'Network', color: '#10b981' },
@@ -60,7 +91,8 @@ const chartConfig = {
 
 const ITPerformanceDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [isHovering, setIsHovering] = React.useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [timeRange, setTimeRange] = useState('weekly');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -84,7 +116,7 @@ const ITPerformanceDashboard: React.FC = () => {
     }
   };
 
-  const COLORS = ['#0370c0', '#024d87', '#10b981'];
+  const COLORS = ['#0370c0', '#024d87', '#10b981', '#3b82f6', '#8b5cf6'];
 
   return (
     <div className="min-h-screen flex flex-col bg-lt-offWhite">
@@ -146,7 +178,7 @@ const ITPerformanceDashboard: React.FC = () => {
           
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey hover-card">
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-2">Most Active Member</h3>
-            <div className="text-2xl font-light text-lt-brightBlue">Lorem Ipsum.</div>
+            <div className="text-2xl font-light text-lt-brightBlue">Alice Johnson</div>
             <div className="text-sm text-lt-grey mt-2">42 tickets resolved this month</div>
           </div>
         </motion.div>
@@ -160,95 +192,202 @@ const ITPerformanceDashboard: React.FC = () => {
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Ticket Volume Over Time</h3>
             <div className="flex justify-end mb-4">
               <div className="inline-flex rounded-md shadow-sm" role="group">
-                <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey">
+                <button 
+                  className={`px-4 py-2 text-sm font-medium border ${timeRange === 'daily' ? 'bg-lt-lightGrey' : 'bg-white'} rounded-l-lg hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey`}
+                  onClick={() => setTimeRange('daily')}
+                >
                   Daily
                 </button>
-                <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-lt-lightGrey border-t border-b border-r border-gray-200 hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey">
+                <button 
+                  className={`px-4 py-2 text-sm font-medium border-t border-b border-r ${timeRange === 'weekly' ? 'bg-lt-lightGrey' : 'bg-white'} hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey`}
+                  onClick={() => setTimeRange('weekly')}
+                >
                   Weekly
                 </button>
-                <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey">
+                <button 
+                  className={`px-4 py-2 text-sm font-medium border-t border-b border-r ${timeRange === 'monthly' ? 'bg-lt-lightGrey' : 'bg-white'} rounded-r-lg hover:bg-gray-100 focus:z-10 focus:bg-lt-lightGrey`}
+                  onClick={() => setTimeRange('monthly')}
+                >
                   Monthly
                 </button>
               </div>
             </div>
-            <div className="h-64">
-              <ChartContainer config={chartConfig}>
-                <LineChart data={ticketsOverTimeData}>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={ticketsOverTimeData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
+                  <Legend />
                   <Line
                     type="monotone"
                     dataKey="tickets"
                     stroke="#0370c0"
                     strokeWidth={2}
+                    activeDot={{ r: 8 }}
+                    name="Tickets"
                   />
                 </LineChart>
-              </ChartContainer>
+              </ResponsiveContainer>
             </div>
           </div>
           
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Ticket Distribution by Type</h3>
-            <div className="h-64 flex flex-col">
-              <div className="flex-1">
-                <ChartContainer config={chartConfig}>
-                  <PieChart>
-                    <Pie
-                      data={ticketTypeData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {ticketTypeData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ChartContainer>
-              </div>
-              <div className="flex justify-center mt-4">
-                {ticketTypeData.map((entry, index) => (
-                  <div key={entry.name} className="flex items-center mx-3">
-                    <div
-                      className="w-3 h-3 rounded-full mr-1"
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                    ></div>
-                    <span className="text-sm text-lt-grey">{entry.name}: {entry.value}%</span>
-                  </div>
-                ))}
-              </div>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={ticketTypeData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {ticketTypeData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </motion.div>
         
-        {/* Bottom Section */}
+        {/* New Chart - Tickets Solved by Agent */}
         <motion.div 
           className="grid grid-cols-1 gap-6 mb-8"
           variants={itemVariants}
         >
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
-            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Priority Breakdown of Pending Tickets</h3>
-            <div className="h-64">
-              <ChartContainer config={chartConfig}>
-                <RechartsBarChart data={priorityData}>
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Tickets Solved by Agent</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={ticketsByAgentData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value">
+                  <Legend />
+                  <Bar dataKey="tickets" name="Tickets Resolved">
+                    {ticketsByAgentData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Priority Breakdown and New Charts */}
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+          variants={itemVariants}
+        >
+          {/* Priority Breakdown */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Priority Breakdown of Pending Tickets</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={priorityData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="value" name="Number of Tickets">
                     {priorityData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Bar>
-                </RechartsBarChart>
-              </ChartContainer>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          
+          {/* SLA Compliance Over Time */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">SLA Compliance Over Time</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart
+                  data={slaComplianceData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis domain={[80, 100]} />
+                  <Tooltip />
+                  <Legend />
+                  <Area type="monotone" dataKey="compliance" stroke="#10b981" fill="#10b98180" name="SLA Compliance %" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Ticket Aging Analysis */}
+        <motion.div 
+          className="grid grid-cols-1 gap-6 mb-8"
+          variants={itemVariants}
+        >
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Ticket Aging Analysis</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={ticketAgingData}
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="tickets" name="Number of Tickets" fill="#0370c0" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </motion.div>

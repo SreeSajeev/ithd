@@ -76,7 +76,7 @@ const ChangeRequest: React.FC = () => {
   };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-[#1c0d40] to-[#2b0d6b]">
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-lt-offWhite">
       <Header title="CHANGE REQUEST" />
       
       <div className="max-w-[1366px] w-full px-4 py-8">

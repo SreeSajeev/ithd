@@ -68,8 +68,8 @@ const Clarification: React.FC = () => {
   };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-lt-darkBlue to-[#1a3f64]">
-      <Header title="CLARIFICATION" />
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-lt-offWhite">
+      <Header title="ASK FOR CLARIFICATION" />
       
       <div className="max-w-[1366px] w-full px-4 py-8">
         <motion.div 
