@@ -85,7 +85,7 @@ const SearchIssue: React.FC = () => {
   };
 
   return (
-    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-lt-darkBlue to-[#1a3f64]">
+    <div className="lt-bg min-h-screen w-full flex flex-col items-center bg-lt-offWhite">
       <Header title="SEARCH ISSUE" />
       
       <div className="max-w-[1366px] w-full px-4 py-8">
@@ -95,7 +95,7 @@ const SearchIssue: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[30pt] font-light text-white relative inline-block">
+          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
             Search Issue
             <motion.span
               className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
@@ -107,14 +107,14 @@ const SearchIssue: React.FC = () => {
         </motion.div>
         
         <motion.div 
-          className="form-container w-full p-8 relative hover-card bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-lg"
+          className="form-container w-full p-8 relative hover-card"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.button 
             onClick={() => navigate('/')}
-            className="back-button absolute top-6 left-6 text-white hover:text-lt-brightBlue transition-colors flex items-center"
+            className="back-button absolute top-6 left-6 text-lt-grey hover:text-lt-brightBlue transition-colors flex items-center"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             whileHover={{ x: -5 }}
@@ -127,7 +127,7 @@ const SearchIssue: React.FC = () => {
           
           <form onSubmit={handleSearchSubmit} className="pt-12">
             <motion.div className="mb-6 relative" variants={itemVariants}>
-              <label htmlFor="problemDescription" className={`form-label block mb-2 text-white ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="problemDescription" className={`form-label block mb-2 ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
                 Problem Description <span className="text-red-500 required-indicator">*</span>
               </label>
               <input 
@@ -146,7 +146,7 @@ const SearchIssue: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <motion.div className="relative" variants={itemVariants}>
-                <label htmlFor="year" className={`form-label block mb-2 text-white ${activeField === 'year' ? 'text-lt-brightBlue' : ''}`}>
+                <label htmlFor="year" className={`form-label block mb-2 ${activeField === 'year' ? 'text-lt-brightBlue' : ''}`}>
                   Year
                 </label>
                 <select 
@@ -167,7 +167,7 @@ const SearchIssue: React.FC = () => {
               </motion.div>
               
               <motion.div className="relative" variants={itemVariants}>
-                <label htmlFor="reporterId" className={`form-label block mb-2 text-white ${activeField === 'reporterId' ? 'text-lt-brightBlue' : ''}`}>
+                <label htmlFor="reporterId" className={`form-label block mb-2 ${activeField === 'reporterId' ? 'text-lt-brightBlue' : ''}`}>
                   Reporter ID
                 </label>
                 <input 
@@ -185,7 +185,7 @@ const SearchIssue: React.FC = () => {
             </div>
             
             <motion.div className="mb-8" variants={itemVariants}>
-              <h3 className="text-white text-xl mb-4">Recommended Areas to Search</h3>
+              <h3 className="text-lt-darkBlue text-xl mb-4">Recommended Areas to Search</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="flex items-center">
                   <input 
@@ -195,7 +195,7 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.subject}
                     onChange={() => handleCheckboxChange('subject')}
                   />
-                  <label htmlFor="subject" className="text-white cursor-pointer">Subject</label>
+                  <label htmlFor="subject" className="form-label cursor-pointer">Subject</label>
                 </div>
                 <div className="flex items-center">
                   <input 
@@ -205,7 +205,7 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.transaction}
                     onChange={() => handleCheckboxChange('transaction')}
                   />
-                  <label htmlFor="transaction" className="text-white cursor-pointer">Transaction</label>
+                  <label htmlFor="transaction" className="form-label cursor-pointer">Transaction</label>
                 </div>
                 <div className="flex items-center">
                   <input 
@@ -215,7 +215,7 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.inputData}
                     onChange={() => handleCheckboxChange('inputData')}
                   />
-                  <label htmlFor="inputData" className="text-white cursor-pointer">Input Data</label>
+                  <label htmlFor="inputData" className="form-label cursor-pointer">Input Data</label>
                 </div>
                 <div className="flex items-center">
                   <input 
@@ -225,7 +225,7 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.systemError}
                     onChange={() => handleCheckboxChange('systemError')}
                   />
-                  <label htmlFor="systemError" className="text-white cursor-pointer">System Error</label>
+                  <label htmlFor="systemError" className="form-label cursor-pointer">System Error</label>
                 </div>
                 <div className="flex items-center">
                   <input 
@@ -235,7 +235,7 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.responseThread}
                     onChange={() => handleCheckboxChange('responseThread')}
                   />
-                  <label htmlFor="responseThread" className="text-white cursor-pointer">Response Thread</label>
+                  <label htmlFor="responseThread" className="form-label cursor-pointer">Response Thread</label>
                 </div>
                 <div className="flex items-center">
                   <input 
@@ -245,18 +245,18 @@ const SearchIssue: React.FC = () => {
                     checked={searchAreas.issueNumber}
                     onChange={() => handleCheckboxChange('issueNumber')}
                   />
-                  <label htmlFor="issueNumber" className="text-white cursor-pointer">Issue Number</label>
+                  <label htmlFor="issueNumber" className="form-label cursor-pointer">Issue Number</label>
                 </div>
               </div>
             </motion.div>
             
             <motion.div className="mb-8 relative" variants={itemVariants}>
-              <label htmlFor="attachment" className={`form-label block mb-2 text-white ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="attachment" className={`form-label block mb-2 ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
                 Attachment
               </label>
               <div className="flex gap-3 items-center">
                 <div className="file-input-wrapper">
-                  <label className="file-input-button bg-white/20 hover:bg-white/30 text-white transition-colors flex items-center">
+                  <label className="file-input-button bg-lt-lightGrey hover:bg-gray-300 transition-colors flex items-center">
                     <Upload className="w-4 h-4 mr-2" />
                     Choose File
                     <input 
@@ -269,7 +269,7 @@ const SearchIssue: React.FC = () => {
                     />
                   </label>
                 </div>
-                <span className="file-name text-white">{fileName || "No File Chosen"}</span>
+                <span className="file-name text-lt-grey">{fileName || "No File Chosen"}</span>
               </div>
             </motion.div>
             
@@ -281,7 +281,7 @@ const SearchIssue: React.FC = () => {
             >
               <button 
                 type="submit" 
-                className="lt-button-primary btn-ripple min-w-[180px] w-full max-w-xs flex items-center justify-center bg-lt-brightBlue"
+                className="lt-button-primary btn-ripple min-w-[180px] w-full max-w-xs flex items-center justify-center py-4"
               >
                 <Search className="w-5 h-5 mr-2" />
                 Search Issue

@@ -48,6 +48,34 @@ const priorityData = [
   { name: 'Low', value: 10, color: '#10b981' },
 ];
 
+// New data for additional charts
+const ticketsByAgentData = [
+  { name: 'Alice', tickets: 42 },
+  { name: 'Bob', tickets: 38 },
+  { name: 'Charlie', tickets: 29 },
+  { name: 'David', tickets: 25 },
+  { name: 'Emma', tickets: 47 },
+  { name: 'Frank', tickets: 19 },
+];
+
+const slaComplianceData = [
+  { name: 'Jan', compliance: 92 },
+  { name: 'Feb', compliance: 89 },
+  { name: 'Mar', compliance: 93 },
+  { name: 'Apr', compliance: 95 },
+  { name: 'May', compliance: 97 },
+  { name: 'Jun', compliance: 94 },
+  { name: 'Jul', compliance: 96 },
+];
+
+const ticketAgingData = [
+  { name: '0-1 days', tickets: 22 },
+  { name: '2-3 days', tickets: 15 },
+  { name: '4-7 days', tickets: 9 },
+  { name: '8-14 days', tickets: 5 },
+  { name: '15+ days', tickets: 3 },
+];
+
 const chartConfig = {
   tickets: { label: 'Tickets', color: '#0370c0' },
   application: { label: 'Application', color: '#0370c0' },
@@ -56,6 +84,7 @@ const chartConfig = {
   high: { label: 'High', color: '#de3618' },
   medium: { label: 'Medium', color: '#f59e0b' },
   low: { label: 'Low', color: '#10b981' },
+  compliance: { label: 'SLA Compliance %', color: '#0370c0' },
 };
 
 const ITPerformanceDashboard: React.FC = () => {
@@ -146,8 +175,8 @@ const ITPerformanceDashboard: React.FC = () => {
           
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey hover-card">
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-2">Most Active Member</h3>
-            <div className="text-2xl font-light text-lt-brightBlue">Lorem Ipsum.</div>
-            <div className="text-sm text-lt-grey mt-2">42 tickets resolved this month</div>
+            <div className="text-2xl font-light text-lt-brightBlue">Emma</div>
+            <div className="text-sm text-lt-grey mt-2">47 tickets resolved this month</div>
           </div>
         </motion.div>
         
@@ -228,11 +257,65 @@ const ITPerformanceDashboard: React.FC = () => {
           </div>
         </motion.div>
         
-        {/* Bottom Section */}
+        {/* Additional Charts - Bottom Section */}
         <motion.div 
-          className="grid grid-cols-1 gap-6 mb-8"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
           variants={itemVariants}
         >
+          {/* New chart: Tickets Solved by Agent */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Tickets Solved by Agent</h3>
+            <div className="h-64">
+              <ChartContainer config={chartConfig}>
+                <RechartsBarChart data={ticketsByAgentData} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="name" type="category" width={80} />
+                  <Tooltip />
+                  <Bar dataKey="tickets" fill="#0370c0" />
+                </RechartsBarChart>
+              </ChartContainer>
+            </div>
+          </div>
+          
+          {/* New chart: SLA Compliance Over Time */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">SLA Compliance Over Time</h3>
+            <div className="h-64">
+              <ChartContainer config={chartConfig}>
+                <LineChart data={slaComplianceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis domain={[80, 100]} />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="compliance"
+                    stroke="#10b981"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ChartContainer>
+            </div>
+          </div>
+          
+          {/* Third additional chart: Ticket Aging */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
+            <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Ticket Aging</h3>
+            <div className="h-64">
+              <ChartContainer config={chartConfig}>
+                <RechartsBarChart data={ticketAgingData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="tickets" fill="#f59e0b" />
+                </RechartsBarChart>
+              </ChartContainer>
+            </div>
+          </div>
+          
+          {/* Original: Priority Breakdown */}
           <div className="bg-white p-6 rounded-lg shadow-md border border-lt-lightGrey">
             <h3 className="text-[20pt] font-normal text-lt-darkBlue mb-4">Priority Breakdown of Pending Tickets</h3>
             <div className="h-64">
@@ -258,7 +341,7 @@ const ITPerformanceDashboard: React.FC = () => {
           variants={itemVariants}
         >
           <Button 
-            className="lt-button-primary btn-ripple flex items-center justify-center px-8"
+            className="lt-button-primary btn-ripple flex items-center justify-center px-8 py-4 text-base"
             onClick={() => {
               // Handle report download action
               const link = document.createElement('a');

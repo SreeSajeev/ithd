@@ -4,16 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Search, Upload } from 'lucide-react';
 import Header from '../components/Header';
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 // Mock data for the table
 const mockTickets = [
@@ -25,7 +17,16 @@ const mockTickets = [
   { id: 6, name: 'Emily Davis', ticketNumber: 'IT-2023-006', type: 'Hardware', pnrNumber: 'PNR006', status: 'Closed', priority: 'Low', assignedTo: 'Frank', dateCreated: '2023-05-15' },
   { id: 7, name: 'Robert Wilson', ticketNumber: 'IT-2023-007', type: 'Software', pnrNumber: 'PNR007', status: 'Open', priority: 'High', assignedTo: 'Grace', dateCreated: '2023-05-16' },
   { id: 8, name: 'Lisa Moore', ticketNumber: 'IT-2023-008', type: 'Hardware', pnrNumber: 'PNR008', status: 'In Progress', priority: 'Medium', assignedTo: 'Henry', dateCreated: '2023-05-17' },
+  { id: 9, name: 'Thomas Brown', ticketNumber: 'IT-2023-009', type: 'Software', pnrNumber: 'PNR009', status: 'Open', priority: 'High', assignedTo: 'Isabella', dateCreated: '2023-05-18' },
+  { id: 10, name: 'William Green', ticketNumber: 'IT-2023-010', type: 'Hardware', pnrNumber: 'PNR010', status: 'Closed', priority: 'Low', assignedTo: 'Jack', dateCreated: '2023-05-19' },
+  { id: 11, name: 'Jessica Black', ticketNumber: 'IT-2023-011', type: 'Software', pnrNumber: 'PNR011', status: 'In Progress', priority: 'Medium', assignedTo: 'Kevin', dateCreated: '2023-05-20' },
+  { id: 12, name: 'Alexander White', ticketNumber: 'IT-2023-012', type: 'Hardware', pnrNumber: 'PNR012', status: 'Open', priority: 'High', assignedTo: 'Laura', dateCreated: '2023-05-21' },
 ];
+
+interface SortConfig {
+  key: string;
+  direction: 'ascending' | 'descending';
+}
 
 const ITHelpdeskView: React.FC = () => {
   const navigate = useNavigate();
@@ -35,6 +36,8 @@ const ITHelpdeskView: React.FC = () => {
   const [isPnrOpen, setIsPnrOpen] = useState<boolean>(false);
   const [filteredTickets, setFilteredTickets] = useState(mockTickets);
   const [fileUploaded, setFileUploaded] = useState<string | null>(null);
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<number | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -56,11 +59,13 @@ const ITHelpdeskView: React.FC = () => {
       filtered = filtered.filter(ticket => ticket.pnrNumber === pnrNumber);
     }
     setFilteredTickets(filtered);
+    toast.success(`Found ${filtered.length} tickets matching your criteria`);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFileUploaded(e.target.files[0].name);
+      toast.success(`File "${e.target.files[0].name}" uploaded successfully`);
     }
   };
 
@@ -84,6 +89,42 @@ const ITHelpdeskView: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    toast.success('Export successful');
+  };
+
+  const sortData = (key: string) => {
+    let direction: 'ascending' | 'descending' = 'ascending';
+    
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    
+    setSortConfig({ key, direction });
+    
+    const sortedData = [...filteredTickets].sort((a, b) => {
+      if (a[key as keyof typeof a] < b[key as keyof typeof b]) {
+        return direction === 'ascending' ? -1 : 1;
+      }
+      if (a[key as keyof typeof a] > b[key as keyof typeof b]) {
+        return direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+    
+    setFilteredTickets(sortedData);
+  };
+
+  const getSortIndicator = (key: string) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return null;
+    }
+    
+    return sortConfig.direction === 'ascending' ? ' ↑' : ' ↓';
+  };
+
+  const handleRowClick = (id: number) => {
+    setSelectedTicket(id);
+    navigate('/ticket-summary');
   };
 
   return (
@@ -205,7 +246,7 @@ const ITHelpdeskView: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-6">
             <Button 
               onClick={handleSearch} 
-              className="lt-button-primary btn-ripple flex items-center justify-center px-8"
+              className="lt-button-primary btn-ripple flex items-center justify-center px-8 py-4 text-base"
             >
               <Search className="w-5 h-5 mr-2" />
               Find Issue
@@ -213,7 +254,7 @@ const ITHelpdeskView: React.FC = () => {
             
             <div className="relative">
               <Button 
-                className="lt-button-secondary btn-ripple flex items-center justify-center px-8"
+                className="lt-button-secondary btn-ripple flex items-center justify-center px-8 py-4 text-base"
                 onClick={() => document.getElementById('fileUpload')?.click()}
               >
                 <Upload className="w-5 h-5 mr-2" />
@@ -230,7 +271,7 @@ const ITHelpdeskView: React.FC = () => {
             
             <Button 
               onClick={() => navigate('/it-performance-dashboard')} 
-              className="lt-button-primary btn-ripple flex items-center justify-center px-8"
+              className="lt-button-primary btn-ripple flex items-center justify-center px-8 py-4 text-base"
             >
               Go to Performance Dashboard
             </Button>
@@ -257,54 +298,98 @@ const ITHelpdeskView: React.FC = () => {
             </button>
           </div>
           
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-lt-lightGrey">
-                  <TableHead className="font-semibold">Name</TableHead>
-                  <TableHead className="font-semibold">Ticket Number</TableHead>
-                  <TableHead className="font-semibold">Type</TableHead>
-                  <TableHead className="font-semibold">PNR Number</TableHead>
-                  <TableHead className="font-semibold">Status</TableHead>
-                  <TableHead className="font-semibold">Priority</TableHead>
-                  <TableHead className="font-semibold">Assigned To</TableHead>
-                  <TableHead className="font-semibold">Date Created</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredTickets.map((ticket) => (
-                  <TableRow 
-                    key={ticket.id}
-                    className="hover:bg-lt-offWhite/50 transition-colors border-b border-lt-lightGrey"
-                  >
-                    <TableCell>{ticket.name}</TableCell>
-                    <TableCell>{ticket.ticketNumber}</TableCell>
-                    <TableCell>{ticket.type}</TableCell>
-                    <TableCell>{ticket.pnrNumber}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        ticket.status === 'Open' ? 'bg-yellow-100 text-yellow-800' :
-                        ticket.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {ticket.status}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        ticket.priority === 'High' ? 'bg-red-100 text-red-800' :
-                        ticket.priority === 'Medium' ? 'bg-orange-100 text-orange-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {ticket.priority}
-                      </span>
-                    </TableCell>
-                    <TableCell>{ticket.assignedTo}</TableCell>
-                    <TableCell>{ticket.dateCreated}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          {/* Excel-like table with fixed header and scrollable body */}
+          <div className="overflow-hidden" style={{ maxHeight: '60vh' }}>
+            <div style={{ maxHeight: '60vh', overflow: 'auto' }} className="min-w-full">
+              <table className="min-w-full divide-y divide-lt-lightGrey border-collapse">
+                <thead className="bg-lt-lightGrey sticky top-0 z-10">
+                  <tr>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('name')}
+                    >
+                      Name {getSortIndicator('name')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200" 
+                      onClick={() => sortData('ticketNumber')}
+                    >
+                      Ticket Number {getSortIndicator('ticketNumber')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('type')}
+                    >
+                      Type {getSortIndicator('type')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('pnrNumber')}
+                    >
+                      PNR Number {getSortIndicator('pnrNumber')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('status')}
+                    >
+                      Status {getSortIndicator('status')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('priority')}
+                    >
+                      Priority {getSortIndicator('priority')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('assignedTo')}
+                    >
+                      Assigned To {getSortIndicator('assignedTo')}
+                    </th>
+                    <th 
+                      className="px-6 py-3 text-left text-xs font-medium text-lt-darkBlue uppercase tracking-wider cursor-pointer border border-gray-300 bg-gray-100 hover:bg-gray-200"
+                      onClick={() => sortData('dateCreated')}
+                    >
+                      Date Created {getSortIndicator('dateCreated')}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-lt-lightGrey">
+                  {filteredTickets.map((ticket) => (
+                    <tr 
+                      key={ticket.id}
+                      className="hover:bg-blue-50 cursor-pointer transition-colors border-b border-lt-lightGrey"
+                      onClick={() => handleRowClick(ticket.id)}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.ticketNumber}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.type}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.pnrNumber}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">
+                        <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          ticket.status === 'Open' ? 'bg-yellow-100 text-yellow-800' :
+                          ticket.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {ticket.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">
+                        <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          ticket.priority === 'High' ? 'bg-red-100 text-red-800' :
+                          ticket.priority === 'Medium' ? 'bg-orange-100 text-orange-800' :
+                          'bg-green-100 text-green-800'
+                        }`}>
+                          {ticket.priority}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.assignedTo}</td>
+                      <td className="px-6 py-4 whitespace-nowrap border-x border-gray-200">{ticket.dateCreated}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </motion.div>
