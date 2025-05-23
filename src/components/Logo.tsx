@@ -1,6 +1,6 @@
 
 import React from 'react';
-import ltLogo from '../assets/lt-logo.svg';
+import ltLogo from '../assets/L&T Valves Logo.png';
 
 const Logo: React.FC = () => {
   return (
