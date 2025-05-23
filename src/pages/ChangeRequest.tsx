@@ -86,7 +86,7 @@ const ChangeRequest: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[30pt] font-light text-white relative inline-block">
+          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
             Change Request
             <motion.span
               className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
