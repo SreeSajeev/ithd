@@ -78,7 +78,7 @@ const Clarification: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-[30pt] font-light text-white relative inline-block">
+          <h2 className="text-[30pt] font-light text-lt-darkBlue relative inline-block">
             Clarification
             <motion.span
               className="absolute -bottom-2 left-1/2 h-1 bg-lt-brightBlue rounded-full"
@@ -90,14 +90,14 @@ const Clarification: React.FC = () => {
         </motion.div>
         
         <motion.div 
-          className="form-container w-full p-8 relative hover-card bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-lg"
+          className="form-container w-full p-8 relative hover-card bg-white shadow-lg rounded-lg"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.button 
             onClick={() => navigate('/')}
-            className="back-button absolute top-6 left-6 text-white hover:text-lt-brightBlue transition-colors flex items-center"
+            className="back-button absolute top-6 left-6 text-lt-darkBlue hover:text-lt-brightBlue transition-colors flex items-center"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             whileHover={{ x: -5 }}
@@ -110,13 +110,13 @@ const Clarification: React.FC = () => {
           
           <form onSubmit={handleSubmit} className="pt-12">
             <motion.div className="mb-6 relative" variants={itemVariants}>
-              <label htmlFor="problemDescription" className={`form-label block mb-2 text-white ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="problemDescription" className={`form-label block mb-2 text-lt-darkBlue ${activeField === 'problemDescription' ? 'text-lt-brightBlue' : ''}`}>
                 Problem Description <span className="text-red-500 required-indicator">*</span>
               </label>
               <input 
                 type="text" 
                 id="problemDescription" 
-                className="form-input" 
+                className="form-input border border-lt-lightGrey rounded-md px-4 py-2 w-full" 
                 placeholder="Enter problem description" 
                 required
                 value={problemDescription}
@@ -128,13 +128,13 @@ const Clarification: React.FC = () => {
             </motion.div>
             
             <motion.div className="mb-6 relative" variants={itemVariants}>
-              <label htmlFor="transactionPath" className={`form-label block mb-2 text-white ${activeField === 'transactionPath' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="transactionPath" className={`form-label block mb-2 text-lt-darkBlue ${activeField === 'transactionPath' ? 'text-lt-brightBlue' : ''}`}>
                 Transaction/Menupath/Hardware
               </label>
               <input 
                 type="text" 
                 id="transactionPath" 
-                className="form-input" 
+                className="form-input border border-lt-lightGrey rounded-md px-4 py-2 w-full" 
                 placeholder="Enter transaction, menu path or hardware details"
                 value={transactionPath}
                 onChange={(e) => setTransactionPath(e.target.value)}
@@ -145,12 +145,12 @@ const Clarification: React.FC = () => {
             </motion.div>
             
             <motion.div className="mb-6 relative" variants={itemVariants}>
-              <label htmlFor="problemStatement" className={`form-label block mb-2 text-white ${activeField === 'problemStatement' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="problemStatement" className={`form-label block mb-2 text-lt-darkBlue ${activeField === 'problemStatement' ? 'text-lt-brightBlue' : ''}`}>
                 Problem Statement / Change Reason
               </label>
               <textarea 
                 id="problemStatement" 
-                className="form-input min-h-32" 
+                className="form-input border border-lt-lightGrey rounded-md px-4 py-2 w-full min-h-32" 
                 placeholder="Enter text here"
                 value={problemStatement}
                 onChange={(e) => setProblemStatement(e.target.value)}
@@ -161,25 +161,25 @@ const Clarification: React.FC = () => {
             </motion.div>
             
             <motion.div className="mb-8 relative" variants={itemVariants}>
-              <label htmlFor="attachment" className={`form-label block mb-2 text-white ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
+              <label htmlFor="attachment" className={`form-label block mb-2 text-lt-darkBlue ${activeField === 'attachment' ? 'text-lt-brightBlue' : ''}`}>
                 Attachment
               </label>
               <div className="flex gap-3 items-center">
                 <div className="file-input-wrapper">
-                  <label className="file-input-button bg-white/20 hover:bg-white/30 text-white transition-colors flex items-center">
+                  <label className="file-input-button bg-lt-lightGrey hover:bg-lt-lightGrey/80 text-lt-darkBlue transition-colors flex items-center px-4 py-2 rounded-md cursor-pointer">
                     <Upload className="w-4 h-4 mr-2" />
                     Choose File
                     <input 
                       type="file" 
                       id="attachment" 
-                      className="file-input" 
+                      className="file-input hidden" 
                       onChange={handleFileChange}
                       onFocus={() => handleFocus('attachment')}
                       onBlur={handleBlur}
                     />
                   </label>
                 </div>
-                <span className="file-name text-white">{fileName || "No File Chosen"}</span>
+                <span className="file-name text-lt-grey">{fileName || "No File Chosen"}</span>
               </div>
             </motion.div>
             
@@ -191,7 +191,7 @@ const Clarification: React.FC = () => {
             >
               <button 
                 type="submit" 
-                className="lt-button-primary btn-ripple min-w-[180px] w-full max-w-xs flex items-center justify-center"
+                className="lt-button-primary bg-lt-primary hover:bg-lt-primary/90 text-white font-medium py-2 px-6 rounded-md min-w-[180px] w-full max-w-xs flex items-center justify-center"
               >
                 <HelpCircle className="w-5 h-5 mr-2" />
                 Send to IT Helpdesk
